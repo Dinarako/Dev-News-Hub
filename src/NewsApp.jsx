@@ -1,12 +1,6 @@
 import { useState } from "react";
 import logo from "./logo.png";
 
-const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-
-if (!API_KEY) {
-  console.error("Missing REACT_APP_NEWS_API_KEY in .env");
-}
-
 const TOPICS = [
   { value: "", label: "All Tech" },
 

@@ -12,7 +12,14 @@ export default async function handler(req, res) {
 
   const { keywords, start_date } = req.query;
   
-  const API_KEY = process.env.REACT_APP_NEWS_API_KEY || '40b73fbe07f843f7a4102b8990726f2e';
+  const API_KEY = process.env.NEWS_API_TOKEN;
+  
+  if (!API_KEY) {
+    return res.status(500).json({ 
+      status: 'error',
+      message: 'NEWS_API_TOKEN environment variable is not set' 
+    });
+  }
   
   // NewsAPI /everything endpoint - supports keyword search and date filtering
   // Note: Free tier limits to 100 results per request
