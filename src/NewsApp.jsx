@@ -133,14 +133,27 @@ function NewsApp() {
         source: { name: article.author || "Unknown" }
       }));
 
+      console.log("Before filter - Articles count:", filteredArticles.length);
+      console.log("Recent only filter enabled:", recentOnly);
+
       if (recentOnly) {
         const cutoff = new Date();
         cutoff.setDate(cutoff.getDate() - 3);
+        console.log("Cutoff date:", cutoff.toISOString());
 
+        const beforeFilterCount = filteredArticles.length;
         filteredArticles = filteredArticles.filter((article) => {
-          if (!article.publishedAt) return false;
-          return new Date(article.publishedAt) >= cutoff;
+          if (!article.publishedAt) {
+            console.log("Article without date:", article.title);
+            return false;
+          }
+          const articleDate = new Date(article.publishedAt);
+          const isRecent = articleDate >= cutoff;
+          console.log(`${article.title.substring(0, 50)}... - ${article.publishedAt} - Recent: ${isRecent}`);
+          return isRecent;
         });
+        console.log(`After filter - Removed ${beforeFilterCount - filteredArticles.length} old articles`);
+        console.log("After filter - Articles count:", filteredArticles.length);
       }
 
       setArticles(filteredArticles);
