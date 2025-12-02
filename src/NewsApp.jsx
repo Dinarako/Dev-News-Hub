@@ -91,10 +91,11 @@ function NewsApp() {
     setArticles([]);
 
     try {
-      // 1) Use our backend proxy API route
+      // 1) Use backend proxy API route (works on Vercel, not localhost)
+      // For localhost, deploy first or use direct API with CORS extension
       let url = `/api/news?keywords=${encodeURIComponent(query)}`;
 
-      // 2) If "Last 3 days" is checked, add start_date
+      // 2) If "Last 3 days" is checked, add start_date  
       if (recentOnly) {
         const today = new Date();
         const fromDate = new Date();
