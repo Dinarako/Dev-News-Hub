@@ -91,10 +91,8 @@ function NewsApp() {
     setArticles([]);
 
     try {
-      // 1) Base URL for Currents API
-      let url = `https://api.currentsapi.services/v1/search?keywords=${encodeURIComponent(
-        query
-      )}&language=en&apiKey=${API_KEY}`;
+      // 1) Use our backend proxy API route
+      let url = `/api/news?keywords=${encodeURIComponent(query)}`;
 
       // 2) If "Last 3 days" is checked, add start_date
       if (recentOnly) {
@@ -109,14 +107,15 @@ function NewsApp() {
       console.log("Request URL:", url);
 
       const res = await fetch(url);
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch news");
-      }
-
       const data = await res.json();
 
-      if (data.status !== "ok") {
+      console.log("API Response:", data);
+
+      if (!res.ok) {
+        throw new Error(data.message || `Failed to fetch news: ${res.status}`);
+      }
+
+      if (data.status === "error") {
         throw new Error(data.message || "API error");
       }
 
