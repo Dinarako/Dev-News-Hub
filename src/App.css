@@ -1,38 +1,188 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* === Body background === */
+body {
+  background-image: url('./dk.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
+}
+
+/* === Card container === */
+.news-app {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  background: #253900;
+  color: #e5e7eb;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* Highlighted keyword */
+.highlight {
+  background-color: #FFF4A4;
+  color: black;
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+/* Heading + subtitle */
+.app-title {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+.app-logo {
+  height: 60px;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+.news-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.news-app .subtitle {
+  margin-bottom: 1.5rem;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+/* === Controls row === */
+.news-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* Make all controls share same height + pill radius */
+.news-controls select,
+.news-controls input[type="text"],
+.news-controls button,
+.recent-toggle {
+  height: 44px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+/* Topic dropdown: light background, dark text */
+.news-controls select {
+  flex: 0 0 170px;
+  padding: 0 0.75rem;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* Search input: takes remaining space */
+.news-controls input[type="text"] {
+  flex: 1 1 200px;
+  padding: 0 0.9rem;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* Search button: purple pill */
+.news-controls button {
+  flex: 0 0 140px;
+  padding: 0 1.25rem;
+  border: none;
+  background-color: #08CB00;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.news-controls button:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Last 3 days toggle pill */
+.recent-toggle {
+  flex: 0 0 120px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.9rem;
+  border: 1px solid #4b5563; /* thin border */
+  background: transparent;
+  color: #e5e7eb;
+  white-space: nowrap; /* keep text on one line */
+}
+
+.recent-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #08CB00; 
+}
+
+/* === Status + list === */
+.news-status .error {
+  color: #fca5a5;
+}
+
+.articles-found {
+  margin-bottom: 4rem;
+}
+
+.filter-badge {
+  margin-left: 0.5rem;
+  padding: 2px 8px;
+  background-color: #6930c3;
+  color: white;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.news-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 1.25rem;
 }
 
-.App-link {
-  color: #61dafb;
+.news-item {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #1f2933;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.news-item h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.news-item a {
+  color: #C6D870;
+  text-decoration: none;
+}
+
+.news-item a:hover {
+  text-decoration: underline;
+}
+
+.news-meta {
+  font-size: 1.3rem;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.news-description {
+  font-size: 1.2rem;
+  color: #d1d5db;
 }
