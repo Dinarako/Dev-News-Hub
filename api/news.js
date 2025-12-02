@@ -15,7 +15,8 @@ export default async function handler(req, res) {
   const API_KEY = process.env.REACT_APP_CURRENTS_API_KEY || '9Bk2gU1sJ6G8sv-a-oeFRiapKRJxlT2mKFG-z47PwlK-btcx';
   
   // Use latest-news endpoint instead of search for better compatibility
-  let url = `https://api.currentsapi.services/v1/latest-news?language=en&apiKey=${API_KEY}`;
+  // Note: Currents API free tier limits to 200 results per request
+  let url = `https://api.currentsapi.services/v1/latest-news?language=en&page_size=200&apiKey=${API_KEY}`;
   
   if (keywords) {
     url += `&keywords=${encodeURIComponent(keywords)}`;
