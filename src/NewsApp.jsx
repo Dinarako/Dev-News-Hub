@@ -92,17 +92,12 @@ function NewsApp() {
 
     try {
       // 1) Use backend proxy API route (works on Vercel, not localhost)
-      // For localhost, deploy first or use direct API with CORS extension
       let url = `/api/news?keywords=${encodeURIComponent(query)}`;
 
-      // 2) If "Last 3 days" is checked, add start_date  
+      // 2) Note: Date filtering removed due to Currents API free tier limitations
+      // The "Last 3 days" filter will be applied client-side instead
       if (recentOnly) {
-        const today = new Date();
-        const fromDate = new Date();
-        fromDate.setDate(today.getDate() - 3);
-        const fromStr = fromDate.toISOString().split("T")[0];
-
-        url += `&start_date=${fromStr}`;
+        // Client-side filtering will be applied after fetching
       }
 
       console.log("Request URL:", url);
@@ -111,17 +106,21 @@ function NewsApp() {
       const data = await res.json();
 
       console.log("API Response:", data);
+      console.log("Response status:", res.status);
+      console.log("News array:", data.news);
 
       if (!res.ok) {
         throw new Error(data.message || `Failed to fetch news: ${res.status}`);
       }
 
-      if (data.status === "error") {
-        throw new Error(data.message || "API error");
+      if (data.status === "error" || data.status === "400") {
+        throw new Error(data.msg || data.message || "API error");
       }
 
       // Currents API returns 'news' array instead of 'articles'
       let filteredArticles = data.news || [];
+
+      console.log("Filtered articles count:", filteredArticles.length);
 
       // Map Currents API response to match our existing structure
       filteredArticles = filteredArticles.map(article => ({
