@@ -1,10 +1,10 @@
 import { useState } from "react";
 import logo from "./logo.png";
 
-const API_KEY = "9Bk2gU1sJ6G8sv-a-oeFRiapKRJxlT2mKFG-z47PwlK-btcx";
+const API_KEY = process.env.REACT_APP_CURRENTS_API_KEY;
 
 if (!API_KEY) {
-  console.error("Missing API_KEY");
+  console.error("Missing REACT_APP_CURRENTS_API_KEY in .env");
 }
 
 const TOPICS = [
