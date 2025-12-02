@@ -1,10 +1,10 @@
 import { useState } from "react";
 import logo from "./logo.png";
 
-const API_KEY = process.env.REACT_APP_CURRENTS_API_KEY;
+const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 
 if (!API_KEY) {
-  console.error("Missing REACT_APP_CURRENTS_API_KEY in .env");
+  console.error("Missing REACT_APP_NEWS_API_KEY in .env");
 }
 
 const TOPICS = [
@@ -94,10 +94,11 @@ function NewsApp() {
       // 1) Use backend proxy API route (works on Vercel, not localhost)
       let url = `/api/news?keywords=${encodeURIComponent(query)}`;
 
-      // 2) Note: Date filtering removed due to Currents API free tier limitations
-      // The "Last 3 days" filter will be applied client-side instead
+      // 2) NewsAPI supports date filtering, but we'll keep client-side for consistency
       if (recentOnly) {
-        // Client-side filtering will be applied after fetching
+        // Could pass date to API: const cutoffDate = new Date(); cutoffDate.setDate(cutoffDate.getDate() - 3);
+        // url += `&start_date=${cutoffDate.toISOString().split('T')[0]}`;
+        // But keeping client-side filtering for now
       }
 
       console.log("Request URL:", url);
@@ -107,31 +108,24 @@ function NewsApp() {
 
       console.log("API Response:", data);
       console.log("Response status:", res.status);
-      console.log("News array:", data.news);
+      console.log("Articles array:", data.articles);
 
       if (!res.ok) {
         throw new Error(data.message || `Failed to fetch news: ${res.status}`);
       }
 
-      if (data.status === "error" || data.status === "400") {
-        throw new Error(data.msg || data.message || "API error");
+      if (data.status === "error") {
+        throw new Error(data.message || "API error");
       }
 
-      // Currents API returns 'news' array instead of 'articles'
-      let filteredArticles = data.news || [];
+      // NewsAPI returns 'articles' array
+      let filteredArticles = data.articles || [];
 
       console.log("Filtered articles count:", filteredArticles.length);
 
-      // Map Currents API response to match our existing structure
-      filteredArticles = filteredArticles.map(article => ({
-        title: article.title,
-        description: article.description,
-        url: article.url,
-        urlToImage: article.image || article.urlToImage,
-        publishedAt: article.published,
-        author: article.author,
-        source: { name: article.author || "Unknown" }
-      }));
+      // NewsAPI response is already in the correct structure
+      // No mapping needed - articles already have:
+      // title, description, url, urlToImage, publishedAt, author, source
 
       console.log("Before filter - Articles count:", filteredArticles.length);
       console.log("Recent only filter enabled:", recentOnly);
