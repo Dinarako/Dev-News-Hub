@@ -1,10 +1,10 @@
 import { useState } from "react";
 import logo from "./logo.png";
 
-const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
+const API_KEY = "9Bk2gU1sJ6G8sv-a-oeFRiapKRJxlT2mKFG-z47PwlK-btcx";
 
 if (!API_KEY) {
-  console.error("Missing REACT_APP_NEWS_API_KEY in .env");
+  console.error("Missing API_KEY");
 }
 
 const TOPICS = [
@@ -84,29 +84,29 @@ function NewsApp() {
 
     // Build a combined query from topic + search term
     const parts = [topic, searchTerm].filter(Boolean);
-    const query = parts.length ? parts.join(" AND ") : "technology";
+    const query = parts.length ? parts.join(" ") : "technology";
 
     setLoading(true);
     setError("");
     setArticles([]);
 
     try {
-      // 1) Base URL
-      let url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(
+      // 1) Base URL for Currents API
+      let url = `https://api.currentsapi.services/v1/search?keywords=${encodeURIComponent(
         query
-      )}&language=en&sortBy=publishedAt&pageSize=100&apiKey=${API_KEY}`;
+      )}&language=en&apiKey=${API_KEY}`;
 
-      // 2) If "Last 3 days" is checked, add &from=...
+      // 2) If "Last 3 days" is checked, add start_date
       if (recentOnly) {
         const today = new Date();
         const fromDate = new Date();
-        fromDate.setDate(today.getDate() - 3); // last 3 days
-        const fromStr = fromDate.toISOString().split("T")[0]; // YYYY-MM-DD
+        fromDate.setDate(today.getDate() - 3);
+        const fromStr = fromDate.toISOString().split("T")[0];
 
-        url += `&from=${fromStr}`;
+        url += `&start_date=${fromStr}`;
       }
 
-      console.log("Request URL:", url); // just to see it in DevTools
+      console.log("Request URL:", url);
 
       const res = await fetch(url);
 
@@ -120,8 +120,19 @@ function NewsApp() {
         throw new Error(data.message || "API error");
       }
 
-      // 3) Optional: extra safety filter on the client side
-      let filteredArticles = data.articles;
+      // Currents API returns 'news' array instead of 'articles'
+      let filteredArticles = data.news || [];
+
+      // Map Currents API response to match our existing structure
+      filteredArticles = filteredArticles.map(article => ({
+        title: article.title,
+        description: article.description,
+        url: article.url,
+        urlToImage: article.image || article.urlToImage,
+        publishedAt: article.published,
+        author: article.author,
+        source: { name: article.author || "Unknown" }
+      }));
 
       if (recentOnly) {
         const cutoff = new Date();
