@@ -10,6 +10,12 @@ body {
   min-height: 100vh;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* === Card container === */
 .news-app {
   max-width: 800px;
@@ -60,7 +66,7 @@ body {
 .news-controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem;
   align-items: center;
 }
 
@@ -76,7 +82,7 @@ body {
 
 /* Topic dropdown: light background, dark text */
 .news-controls select {
-  flex: 0 0 170px;
+  flex: 1 1 200px;
   padding: 0 0.75rem;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;
@@ -86,7 +92,7 @@ body {
 /* Search input: takes remaining space */
 .news-controls input[type="text"] {
   flex: 1 1 200px;
-  padding: 0 0.9rem;
+  padding: 0 0.75rem;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;
   color: #111827;
@@ -97,7 +103,7 @@ body {
   flex: 0 0 140px;
   padding: 0 1.25rem;
   border: none;
-  background-color: #08CB00;
+  background-color: #;
   color: black;
   font-weight: 600;
   cursor: pointer;
@@ -142,7 +148,7 @@ body {
 .filter-badge {
   margin-left: 0.5rem;
   padding: 2px 8px;
-  background-color: #6930c3;
+  background-color: #08CB00;
   color: white;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -185,4 +191,35 @@ body {
 .news-description {
   font-size: 1.2rem;
   color: #d1d5db;
+}
+
+/* === Mobile responsive === */
+@media (max-width: 768px) {
+  .app-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .app-logo {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .news-app {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .news-controls select,
+  .news-controls input[type="text"],
+  .news-controls button,
+  .recent-toggle {
+   width: 100%;
+   box-sizing: border-box;
+   margin: 0; 
+  }
 }

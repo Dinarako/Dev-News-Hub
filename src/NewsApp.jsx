@@ -177,7 +177,7 @@ function NewsApp() {
 
         <input
           type="text"
-          placeholder="Search keyword (e.g. Next.js, OpenAI)"
+          placeholder="Search keyword"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
