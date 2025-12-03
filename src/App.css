@@ -66,7 +66,7 @@ body {
 .news-controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
@@ -103,7 +103,7 @@ body {
   flex: 0 0 140px;
   padding: 0 1.25rem;
   border: none;
-  background-color: #;
+  background-color: #08CB00;
   color: black;
   font-weight: 600;
   cursor: pointer;
@@ -205,6 +205,7 @@ body {
   }
 
   .app-logo {
+    margin-top: 2rem;
     margin-right: 0;
     margin-bottom: 0.5rem;
   }
@@ -220,6 +221,13 @@ body {
   .recent-toggle {
    width: 100%;
    box-sizing: border-box;
-   margin: 0; 
+  }
+
+  .news-controls select {
+    margin-bottom: 0.5rem;
+  }
+
+  .news-controls input[type="text"] {
+    margin-bottom: 0.5rem;
   }
 }
