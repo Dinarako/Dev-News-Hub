@@ -90,9 +90,7 @@ function NewsApp() {
 
       // 2) NewsAPI supports date filtering, but we'll keep client-side for consistency
       if (recentOnly) {
-        // Could pass date to API: const cutoffDate = new Date(); cutoffDate.setDate(cutoffDate.getDate() - 3);
-        // url += `&start_date=${cutoffDate.toISOString().split('T')[0]}`;
-        // But keeping client-side filtering for now
+       
       }
 
       console.log("Request URL:", url);
@@ -116,10 +114,6 @@ function NewsApp() {
       let filteredArticles = data.articles || [];
 
       console.log("Filtered articles count:", filteredArticles.length);
-
-      // NewsAPI response is already in the correct structure
-      // No mapping needed - articles already have:
-      // title, description, url, urlToImage, publishedAt, author, source
 
       console.log("Before filter - Articles count:", filteredArticles.length);
       console.log("Recent only filter enabled:", recentOnly);
